@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="网站名称">
+    <meta name="applicable-device" content="pc,mobile">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <title>meuiBdmap百度地图实例化控件</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link type="text/css" rel="stylesheet" href="">
+    <link type="text/css" rel="stylesheet" href="assets/css/meui-bdmap.css"><!--meui百度地图实例化-->
+    <link type="text/css" rel="stylesheet" href="test/demo.css">
+    <link type="images/x-icon" rel="shortcut icon" href="/favicon.ico">
+    <script type="text/javascript">if(top.location != self.location){ top.location = self.location; }</script>
+    <!--[if lt IE 9]>
+        <script type="text/javascript" src="https://cdn.bootcdn.net/ajax/libs/html5shiv/r29/html5.min.js"></script>
+        <script type="text/javascript" src="https://cdn.bootcdn.net/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+        <script type="text/javascript" src="https://cdn.bootcdn.net/ajax/libs/rem/1.3.4/js/rem.min.js"></script>
+        <script type="text/javascript" src="https://cdn.bootcdn.net/ajax/libs/json2/20160511/json2.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+    <div class="wrap">
+        <div class="panel-statement">
+            <blockquote>
+                <h1>meuiBdmap百度地图实例化控件</h1>
+                <p>meuiBdmap控件将百度地图api进行插件化封装，方便前端开发人员直接调用，而不用再研究百度api原代码。</p>
+                <p>
+                    作者：ChenMufeng <br>
+                    Q Q : 1614644937 <br>
+                </p>
+            </blockquote>
+        </div>
+        <div class="panel-demo">
+            <div class="grid-one">
+                <div class="grid-title">默认地图</div>
+                <div class="grid-content">
+                    <div class="grid-box">
+                        <span>中国(不指定坐标和城市)</span><input type="text" id="test001">
+                    </div>
+                    <div class="grid-box">
+                        <span>上海市(根据坐标定位,默认)</span><input type="text" id="test002">
+                    </div>
+                    <div class="grid-box">
+                        <span>武汉市(根据城市定位)</span><input type="text" id="test003">
+                    </div>
+                </div>
+            </div><!--/.grid-one-->
+
+            <div class="grid-one">
+                <div class="grid-title">坐标拾取1（使用元素ClassName属性）</div>
+                <div class="grid-content">
+                    <div class="grid-box">
+                        <span>泉州西湖公园</span><input type="text" class="pick01" value="118.592457,24.933905">
+                    </div>
+                    <div class="grid-box">
+                        <span>泉州东湖公园</span><input type="text" class="pick01" value="118.612453,24.915404">
+                    </div>
+                    <div class="grid-box">
+                        <span>泉州森林公园</span><input type="text" class="pick01" value="118.666536,24.892708">
+                    </div>
+                </div>
+            </div><!--/.grid-one-->
+
+            <div class="grid-one">
+                <div class="grid-title">坐标拾取2（使用元素ID属性）</div>
+                <div class="grid-content">
+                    <div class="grid-box">
+                        <span>泉州领袖天地</span><input type="text" id="test101" value="118.613509,24.889385">
+                    </div>
+                    <div class="grid-box">
+                        <span>泉州浦西万达广场</span><input type="text" id="test102" value="118.60568,24.888803">
+                    </div>
+                    <div class="grid-box">
+                        <span>泉州东海太禾广场</span><input type="text" id="test103" value="118.645156,24.879256">
+                    </div>
+                </div>
+            </div><!--/.grid-one-->
+
+
+            <div class="grid-one">
+                <div class="grid-title">坐标拾取3（按城市、区县定位）</div>
+                <div class="grid-content">
+                    <div class="grid-box">
+                        <span>杭州市</span><input type="text" class="pick03">
+                    </div>
+                    <div class="grid-box">
+                        <span>丰泽区</span><input type="text" class="pick03">
+                    </div>
+                    <div class="grid-box">
+                        <span>惠安县</span><input type="text" class="pick03">
+                    </div>
+                </div>
+            </div><!--/.grid-one-->
+
+            <div class="grid-one">
+                <div class="grid-title">坐标拾取4（按省、自治区、直辖市、特别行政区定位）</div>
+                <div class="grid-content">
+                    <div class="grid-box">
+                        <span>福建省</span><input type="text" class="pick04">
+                    </div>
+                    <div class="grid-box">
+                        <span>广西壮族自治区</span><input type="text" class="pick04">
+                    </div>
+                    <div class="grid-box">
+                        <span>重庆市</span><input type="text" class="pick04">
+                    </div>
+                    <div class="grid-box">
+                        <span>香港特别行政区</span><input type="text" class="pick04">
+                    </div>
+                    <div class="grid-box">
+                        <span>澳门特别行政区</span><input type="text" class="pick04">
+                    </div>
+                </div>
+            </div><!--/.grid-one-->
+
+
+
+            <div class="grid-one">
+                <div class="grid-title">直接展示地图</div>
+                <div class="grid-content">
+                    <div class="grid-box">
+                        <div class="title">默认地图</div>
+                        <div id="test201"></div>
+                    </div>
+                    <div class="grid-box">
+                        <div class="title">自定义地图信息</div>
+                        <div id="test202"></div>
+                    </div>
+                </div>
+            </div><!--/.grid-one-->
+
+
+            <div class="grid-one">
+                <div class="grid-title">综合案例</div>
+                <div class="grid-content">
+                    <div class="grid-box w-100">
+                        <div class="title">楼盘一张图</div>
+                        <div id="test301"></div>
+                    </div>
+                </div>
+            </div><!--/.grid-one-->
+
+        </div><!--/.panel-demo-->
+    </div><!--/.wrap-->
+
+    <!--================================================================================-->
+    <!--                            JAVASCRIPT                                          -->
+    <!--================================================================================-->
+    <script type="text/javascript" src="https://cdn.bootcdn.net/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=2COzFaICuIyVj7V3VetKfmdRVnX8BhVr"></script><!--百度地图api文件-->
+    <script type="text/javascript" src="src/meui-bdmap.js"></script><!--meui百度地图实例化-->
+    <script type="text/javascript" src="test/demo.js"></script>
+    <script type="text/javascript" src="test/demo2.js"></script>
+</body>
+</html>
