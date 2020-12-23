@@ -3,8 +3,10 @@
  * [MEUI百度地图插件]
  * Version：v1.0.0
  * Author: Mufeng
+ * QQ: 1614644937
  * Date: 2020.12.03
  * Update: 2020.12.15
+ * 官网：https://github.com/yimobing/meuiBdmap
  */
 (function ($) {
 
