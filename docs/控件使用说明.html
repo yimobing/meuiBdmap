@@ -21,9 +21,10 @@
         //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::://
         //                            控件使用说明
         //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::://
-        meuiBdmap控件将百度地图api进行控件化封装，方便前端开发人员直接调用，而不用再研究百度api原代码。
+        meuiBaiduMap控件将百度地图api进行控件化封装，方便前端开发人员直接调用，而不用再研究百度api原代码。
         作者：mufeng
         Q Q : 1614644937
+        官网：https://github.com/yimobing/meuiBdmap
 
         【相关链接】
         百度地图api密钥申请：http://lbsyun.baidu.com/ （登录后在个人中心就可以新建密钥了）
@@ -47,12 +48,14 @@
             &lt;div id="allmap"&gt;&lt;/div&gt;
 
         第3步，调用控件创建地图
-            $('#domID').meuiMapHouse('内置函数名', 参数1, 参数2, 参数3);
+            $('#domID').meuiBaiduMap('内置函数名', 参数1, 参数2, 参数3);
         
             其中：
             1、参数1, 参数2, 参数3表示内置函数对应的N个参数，N >= 0
             2、内置函数如下：
-                init //地图初始化
+                init 地图初始化
+
+                //注意：以下内置函数目前无法单独使用，只能在 init 方法的参数中进行调用，参考demo2.js
                 createMapPoint 创建坐标系统/创建标注点
                 createMapBoundary 创建行政区域边界
                 getZoom 获取当前地图绽放级别
@@ -68,7 +71,8 @@
 
         //================================
         //实例. init 地图初始化
-        mapDom.meuiMapHouse('init', {
+        //================================
+        mapDom.meuiBaiduMap('init', {
             city: '泉州市', //默认中心点城市（isNumc=1时有效）
             point: '118.611836,24.918225', //默认中心点经纬度坐标（isNumc=0时有效）
             label: '', //自定义中心点说明文字,默认空(可选). 当不空时,中心点标注文本为本参数,否则为城市名称
@@ -118,17 +122,17 @@
             mouseScroll: function(e){ //回调：鼠标滚动地图时(可选). e参数格式 {"dom":"地图父节点", "map":"地图实例化对象Map", "zoom":"当前地图绽放级别"}
                 var $this = e.dom;
                 var zoom = e.zoom;
-                var center = $this.meuiMapHouse('getCenter');
+                var center = $this.meuiBaiduMap('getCenter');
                 var point = center.lng + ',' + center.lat;
                 console.log('当前地图绽放级别：', zoom, ' 中心点:', center, ' 坐标：', point);
-                //$this.meuiMapHouse('内置函数名', '参数1', '参数2', '参数3'); //这里可继续调用控件其它内置函数,'init'除外.
+                //$this.meuiBaiduMap('内置函数名', '参数1', '参数2', '参数3'); //这里可继续调用控件其它内置函数,'init'除外.
             },
             mouseClick: function(e){ //回调：鼠标点击地图时(可选). e参数格式 {"dom":"地图父节点", "map":"地图实例化对象Map", "zoom":"当前地图绽放级别", "point":{"lng":"经度", "lat":"纬度"}}
                 var $this = e.dom;
                 var zoom = e.zoom;
                 var lng = e.point.lng, lat = e.point.lat;
                 //console.log('您点击的地方坐标为经纬度：', [lng, lat]);
-                //$this.meuiMapHouse('内置函数名', '参数1', '参数2', '参数3'); //这里可继续调用控件其它内置函数,'init'除外.
+                //$this.meuiBaiduMap('内置函数名', '参数1', '参数2', '参数3'); //这里可继续调用控件其它内置函数,'init'除外.
             },
             mouseDoubleClick: function(e){ //回调：鼠标双击地图时(可选). e参数格式 {"dom":"地图父节点", "map":"地图实例化对象Map", "zoom":"当前地图绽放级别", "point":{"lng":"经度", "lat":"纬度"}}
 
@@ -147,7 +151,7 @@
                 }
                 if(event == 'dragend'){
                     console.log('拖拽结束');
-                    //$this.meuiMapHouse('内置函数名', '参数1', '参数2', '参数3'); //这里可继续调用控件其它内置函数,'init'除外.
+                    //$this.meuiBaiduMap('内置函数名', '参数1', '参数2', '参数3'); //这里可继续调用控件其它内置函数,'init'除外.
                 }
             }
         })
@@ -155,15 +159,17 @@
 
         //================================
         //实例. createMapPoint 创建坐标系统/创建标注点
+        //================================
         var dataSource =  {data:[{"name":"山东省", "zuobiao":"117.124638,36.680865", "lpsl":"1000"}]}
-        mapDom.meuiMapHouse(
+        mapDom.meuiBaiduMap(
             'createMapPoint',
             dataSource, //数据源
-            {
-                format: { //自定义数据源字段名称(可选). 方便后台传输任意的字段名,前端只需自定义一下即可
-                    //字段名称格式: 
-                    //除了经纬度坐标字段外只能用格式： '["字段"]' 来表示外，其它皆可用格式：'A["字段1"]B["字段2"]C'
-                    //其中： A、B、C表示任意字符, 里面可含HTML代码. eg. coordinates:'<div>地区名：["title"] <br>楼盘数量：["lpsl"]个</div>'}
+            { //自定义参数
+                format: { //自定义数据源字段名称(可选). 方便前端自定义字段
+                    //【字段格式】除经纬度坐标字段外，其它字段可由任意N个字段+任意字符串组成而成
+                    //· 经纬度坐标字段格式. eg. coordinates: '["字段"]'
+                    //· 其它字段格式. eg. title: 'A["字段1"]B["字段2"]C'
+                    //A、B、C为任意字符(可含HTML代码). eg. title:'<div>地区名：["title"] <br>楼盘数量：["lpsl"]个</div>'}
                     coordinates: '["zuobiao"]', //经纬度坐标
                     title: '["title"]', //文字标题,标注点文字(可选)
                     id: '["id"]', //记录主键key(可选)
@@ -216,22 +222,10 @@
 
         //================================
         //实例. createMapBoundary 创建行政区域边界
+        //================================
         //格式：
-        mapDom.meuiMapHouse('createMapBoundary', ps_source, ps_opts);
-        //eg.
-         var areaFormatJson = {
-            title: '["name"]', 
-            description:'<div>楼盘数量：["lpsl"]个</div>'
-        }
-        var provinceJson = get_data_province();
-        mapDom.meuiMapHouse(
-            'createMapBoundary',
-            { source: provinceJson, format: areaFormatJson }, 
-            { enableLabel: false }
-        );
-
+        mapDom.meuiBaiduMap('createMapBoundary', ps_source, ps_opts);
         参数：ps_source 行政区域数据, ps_opts 其它参数(可选)
-
         //* -----------------------
             ps_source参数格式：
         //* -----------------------
@@ -269,23 +263,43 @@
             }
 
         
+        //* -----------------------
+            例子eg.
+        //* -----------------------
+         var areaFormatJson = {
+            title: '["name"]', 
+            description:'<div>楼盘数量：["lpsl"]个</div>'
+        }
+        var provinceJson = get_data_province();
+        mapDom.meuiBaiduMap(
+            'createMapBoundary',
+            { source: provinceJson, format: areaFormatJson }, 
+            { enableLabel: false }
+        );
+
+
+        
         //================================
         //实例. getZoom 获取当前地图绽放级别
-        var zoom = mapDom.meuiMapHouse('getZoom'); 
+        //================================
+        var zoom = mapDom.meuiBaiduMap('getZoom'); 
 
 
         //================================
         //实例. getCenter 获取地图当前中心点
-        var point = mapDom.meuiMapHouse('getCenter'); 
+        //================================
+        var point = mapDom.meuiBaiduMap('getCenter'); 
 
 
         //================================
         //实例. clearOverlays 移除所有地图覆盖物、清空所有标注点
-        mapDom.meuiMapHouse('clearOverlays'); 
+        //================================
+        mapDom.meuiBaiduMap('clearOverlays'); 
 
 
         //================================
         //实例. removeOverlay 移除地图指定覆盖物
+        //================================
         var label = new BMap.Label('华光中学',
             { 
                 offset: new BMap.Size(x, y), //位置偏移值
@@ -294,7 +308,7 @@
             }
         );
         map.addOverlay(label); //添加文本覆盖物
-        mapDom.meuiMapHouse('removeOverlay', label); 
+        mapDom.meuiBaiduMap('removeOverlay', label); 
 
 
 
