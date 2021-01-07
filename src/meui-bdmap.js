@@ -155,7 +155,7 @@
                     var isBindNode = true; //是否有绑定节点
                     if(typeof _this.selector == 'undefined' || dMode == 'click' || (tagname == 'textarea' || tagname == 'input')) isBindNode = false;
                     var fatherClass = dPosition != 'none' ? ' ' + dPosition : '',
-                        faterWidth = parseFloat(dWidth.toString().replace(/(px|%)/g, ''));
+                        faterWidth = parseFloat(dWidth.toString().replace(/(px|%)/g, '')) + 10;
                     if(dPosition == 'fixed') faterWidth += 30;
                     var faterStyle = ' style="width:' + faterWidth + 'px;"';
                     var allHTML = [
